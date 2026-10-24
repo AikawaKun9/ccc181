@@ -14,7 +14,7 @@ SERVICES = [
     {"id": 1, "name": "Transcript of Records (TOR)"},
     {"id": 2, "name": "Certificates (enrollment, good moral, etc.)"},
     {"id": 3, "name": "Enrollment concerns"},
-    {"id": 4, "name": "Submit requirements"},
+    {"id": 4, "name": "Submit requirements (e.g. forms, documents)"},
 ]
 
 
