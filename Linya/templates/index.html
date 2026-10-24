@@ -1,14 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <p>Kamusta Kababayan, {{ name }}!</p>
-
-  <h2>Tickets in the queue</h2>
-  <ul class="tickets">
-    {% for t in tickets %}
-      <li><a href="{{ url_for('ticket', ticket_id=t) }}">#{{ t }}</a></li>
-    {% else %}
-      <li><p>Get a queue number for the registrar and see when it's your turn.</p></li>
-    {% endfor %}
-  </ul>
+<h1>Linya</h1>
+<p>Get a queue number for the registrar and see when it's your turn.</p>
 {% endblock %}
