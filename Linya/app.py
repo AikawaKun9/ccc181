@@ -5,6 +5,7 @@ Run it with:
 then open http://127.0.0.1:5000
 """
 from flask import Flask, abort, flash, redirect, render_template, request, url_for
+import re
 
 app = Flask(__name__)
 app.secret_key = "dev-only-change-me"  # Week 11 moves this into an environment variable
@@ -35,7 +36,7 @@ def index():
 
 @app.route("/join")
 def join_form():
-    return render_template("join.html")
+    return render_template("join.html", services=SERVICES, form={}, errors={})
 
 
 @app.route("/staff")
@@ -47,6 +48,39 @@ def staff_dashboard():
 def ticket(ticket_id):
     # Temporary: Part 6 replaces this with the real My place page.
     return render_template("ticket.html", ticket_id=ticket_id)
+
+@app.post("/join")
+def join():
+    form = request.form
+    name = form.get("name", "").strip()
+    student_id = form.get("student_id", "").strip()
+    email = form.get("email", "").strip().lower()
+    service_id = form.get("service_id", type=int)
+    priority = form.get("priority") == "on"
+
+    errors = {}
+    if not name:
+        errors["name"] = "Enter your name."
+    if not re.fullmatch(r"\d{4}-\d{4}", student_id):
+        errors["student_id"] = "Enter your student ID in the format YYYY-#### (for example 2024-0673)."
+    if "@" not in email or "." not in email.split("@")[-1]:
+        errors["email"] = "Enter a valid email address."
+    if service_id not in [s["id"] for s in SERVICES]:
+        errors["service_id"] = "Choose a service."
+
+    if errors:
+        flash("Please fix the highlighted fields.", "danger")
+        return render_template("join.html", services=SERVICES, form=form,
+                               errors=errors), 400
+
+    number = TICKETS[-1]["number"] + 1 if TICKETS else 1
+    TICKETS.append({
+        "number": number, "name": name, "student_id": student_id,
+        "email": email, "service_id": service_id,
+        "priority": priority, "window": None, "status": "waiting",
+    })
+    flash(f"You joined the queue. Your ticket is #{number}.", "success")
+    return redirect(url_for("ticket", ticket_id=number))
 
 
 if __name__ == "__main__":
