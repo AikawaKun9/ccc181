@@ -130,6 +130,9 @@ For **students who must visit the registrar in person** and **need to know when 
 | FR-05 | As a **registrar staff member**, I want to **issue a ticket for a student without a phone or data** so that **no one is excluded from the queue**. | Should |
 | FR-06 | As a **registrar head**, I want to **see reports of peak hours and average service time** so that **I can plan staffing**. | Could |
 | FR-07 | As a **student**, I want to **join the queue remotely before arriving** so that **I can save even more time**. | Won't (this time) |
+| FR-08 ★ |	Staff assign a window when calling; the student sees “Go to Window 3” |	Should |
+| FR-09	| Staff filter the waiting list by service | Must |
+| FR-10	| Student can leave the queue |	Should |
 
 ### 4.2 Non-functional requirements
 
